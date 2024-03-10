@@ -107,26 +107,32 @@ def parse_input(user_input):
 
 @input_error
 def add_contact(args, contacts):
+    if len(args) != 2:
+        return "Error: Invalid number of arguments. Use 'add [name] [phone number]'."
+    
     name, phone = args
-    contacts[name] = phone
-    return "Contact added."
+    record = Record(name)
+    record.add_phone(phone)
+
+    book.add_record(record)
+    return f"Contact {name} added with phone number {phone}."
 
 @input_error
-def change_contact(args, contacts):
+def change_contact(args, book):
     if args[0] in contacts.keys():
-        add_contact(args, contacts)
+        add_contact(args, book)
     else:
         raise(KeyError)
 
 @input_error
-def show_phone(args,contacts):
-    return contacts[args[0]]
+def show_phone(args, book):
+    return book[args[0]]
 
 @input_error
-def show_all(args,contacts):
+def show_all(args, book):
     s=''
-    for key in contacts:
-        s+=(f"{key:10} : {contacts[key]}\n")
+    for key in book:
+        s+=(f"{key:10} : {book[key]}\n")
     return s
 
 
@@ -179,13 +185,13 @@ def main():
         elif command == "hello":
             print("How can I help you?")
         elif command == "add":
-            print(add_contact(args, contacts))
+            print(add_contact(args, book))
         elif command == "change":
-            print(change_contact(args, contacts))
+            print(change_contact(args, book))
         elif command == "phone":
-            print(show_phone(args, contacts))
+            print(show_phone(args, book))
         elif command == "all":
-            print(show_all(args, contacts))
+            print(show_all(args, book))
         elif command == "add-birthday":
             print(add_birthday(args, book))
         elif command == "show-birthday":
