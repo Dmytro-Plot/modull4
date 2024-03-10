@@ -106,7 +106,7 @@ def parse_input(user_input):
     return cmd, *args
 
 @input_error
-def add_contact(args, contacts):
+def add_contact(args, book):
     if len(args) != 2:
         return "Error: Invalid number of arguments. Use 'add [name] [phone number]'."
     
